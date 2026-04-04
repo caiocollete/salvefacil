@@ -1,0 +1,7 @@
+# Regras gerais do monorepo: ../.gitignore
+
+node_modules/
+dist/
+coverage/
+generated/
+.env
