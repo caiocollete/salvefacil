@@ -3,6 +3,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
 set "ROOT=%~dp0"
 if "%ROOT:~-1%"=="\" set "ROOT=%ROOT:~0,-1%"
+set "GIT_ORIGIN_URL=https://github.com/caiocollete/salvefacil"
 
 echo.
 echo === SalveFacil — ambiente local ===
@@ -54,19 +55,27 @@ pushd "%ROOT%" || exit /b 1
 where git >nul 2>&1
 if errorlevel 1 (
   echo Git nao encontrado no PATH. Pulando atualizacao do repositorio.
+  echo Instale o Git: https://git-scm.com/downloads
+  echo Repositorio oficial: %GIT_ORIGIN_URL%
+  echo Para clonar em outra pasta: git clone %GIT_ORIGIN_URL%
   popd
   exit /b 0
 )
 if not exist ".git" (
   echo Pasta .git nao encontrada. Pulando fetch/pull.
+  echo Repositorio oficial: %GIT_ORIGIN_URL%
   popd
   exit /b 0
 )
 git remote 2>nul | findstr /r "." >nul
 if errorlevel 1 (
-  echo Nenhum remote Git configurado. Pulando fetch/pull.
-  popd
-  exit /b 0
+  echo Nenhum remote Git configurado. Adicionando origin: %GIT_ORIGIN_URL%
+  git remote add origin "%GIT_ORIGIN_URL%"
+  if errorlevel 1 (
+    echo Falha ao adicionar remote origin.
+    popd
+    exit /b 1
+  )
 )
 echo [1/5] Git: fetch e pull ^(branch atual alinhada ao remoto^)...
 git fetch --all --prune
@@ -76,8 +85,10 @@ if errorlevel 1 (
   exit /b 1
 )
 git pull
+if errorlevel 1 git pull -u origin main
+if errorlevel 1 git pull -u origin master
 if errorlevel 1 (
-  echo Falha em git pull. Resolva conflitos, commit ou stash e rode de novo.
+  echo Falha em git pull. Ajuste o upstream ^(ex.: git branch -u origin/main^) ou resolva conflitos.
   popd
   exit /b 1
 )
