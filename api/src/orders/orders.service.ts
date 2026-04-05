@@ -14,6 +14,12 @@ const orderInclude = {
   items: { include: { product: true } },
 } as const;
 
+function normalizeObservation(raw: string | undefined | null): string | null {
+  if (raw == null) return null;
+  const t = raw.trim();
+  return t === '' ? null : t;
+}
+
 @Injectable()
 export class OrdersService {
   constructor(private readonly prisma: PrismaService) {}
@@ -46,6 +52,7 @@ export class OrdersService {
         productId: item.productId,
         quantity: item.quantity,
         unitPrice: unit,
+        observation: normalizeObservation(item.observation),
       };
     });
 
@@ -128,6 +135,7 @@ export class OrdersService {
               productId: item.productId,
               quantity: item.quantity,
               unitPrice: unit,
+              observation: normalizeObservation(item.observation),
             };
           });
           await tx.orderItem.deleteMany({ where: { orderId: id } });

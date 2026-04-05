@@ -36,6 +36,7 @@ export class ReportsService {
           quantity: it.quantity,
           unitPrice: money(it.unitPrice),
           lineTotal: money(line),
+          observation: it.observation ?? null,
         };
       }),
     );

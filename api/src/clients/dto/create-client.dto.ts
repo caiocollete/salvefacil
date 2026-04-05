@@ -1,9 +1,12 @@
-import { PersonType } from '@prisma/client';
+import { ClientClassification, PersonType } from '@prisma/client';
 import { IsEnum, IsString, MinLength } from 'class-validator';
 
 export class CreateClientDto {
   @IsEnum(PersonType)
   type: PersonType;
+
+  @IsEnum(ClientClassification)
+  classification: ClientClassification;
 
   @IsString()
   @MinLength(2)

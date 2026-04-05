@@ -12,13 +12,20 @@ enum PersonType {
   PJ
 }
 
+enum ClientClassification {
+  PEQUENO
+  MEDIO
+  GRANDE
+}
+
 model Client {
-  id        String     @id @default(cuid())
-  type      PersonType
-  name      String
-  document  String     @unique
-  address   String
-  phone     String
+  id             String               @id @default(cuid())
+  type           PersonType
+  classification ClientClassification @default(MEDIO)
+  name           String
+  document       String               @unique
+  address        String
+  phone          String
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @updatedAt @map("updated_at")
   orders    Order[]
@@ -53,13 +60,14 @@ model Order {
 }
 
 model OrderItem {
-  id        String   @id @default(cuid())
-  orderId   String   @map("order_id")
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId String   @map("product_id")
-  product   Product  @relation(fields: [productId], references: [id])
-  quantity  Int
-  unitPrice Decimal  @map("unit_price") @db.Decimal(12, 2)
+  id           String   @id @default(cuid())
+  orderId      String   @map("order_id")
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId    String   @map("product_id")
+  product      Product  @relation(fields: [productId], references: [id])
+  quantity     Int
+  unitPrice    Decimal  @map("unit_price") @db.Decimal(12, 2)
+  observation  String?
 
   @@map("order_items")
 }
