@@ -97,75 +97,18 @@ exit /b 0
 
 :ensure_node_24
 where node >nul 2>&1
-if errorlevel 1 goto :install_node24
-
+if errorlevel 1 (
+  echo node nao encontrado no PATH. Instale Node.js 24 ^(veja .nvmrc^): https://nodejs.org/
+  pause
+  exit /b 1
+)
 node -e "process.exit(/^v24\./.test(process.version)?0:1)" >nul 2>&1
 if errorlevel 1 (
-  echo Node encontrado, mas a versao precisa ser 24.x ^(veja .nvmrc^).
-  goto :install_node24
+  echo A versao do Node precisa ser 24.x ^(veja .nvmrc^). Instale em https://nodejs.org/
+  pause
+  exit /b 1
 )
 for /f "delims=" %%V in ('node -v') do echo Usando %%V
-exit /b 0
-
-:install_node24
-echo Node 24 nao encontrado. Tentando instalar ^(pode pedir UAC / administrador^)...
-where winget >nul 2>&1
-if errorlevel 1 goto :install_node24_ps
-
-winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements
-call :prepend_nodejs_paths
-where node >nul 2>&1
-if errorlevel 1 (
-  echo winget instalou o Node, mas ele ainda nao esta no PATH desta janela.
-  echo Feche este CMD, abra outro e rode dev-local.bat de novo.
-  pause
-  exit /b 1
-)
-node -e "process.exit(/^v24\./.test(process.version)?0:1)" >nul 2>&1
-if errorlevel 1 (
-  echo Aviso: a versao instalada pelo winget pode nao ser 24.x.
-  echo Instale Node 24 em https://nodejs.org/ ^(Current 24.x^) e rode de novo.
-  pause
-  exit /b 1
-)
-for /f "delims=" %%V in ('node -v') do echo Instalado: %%V
-exit /b 0
-
-:install_node24_ps
-echo winget indisponivel. Baixando instalador MSI Node 24.x de nodejs.org via PowerShell...
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$ErrorActionPreference='Stop'; ^
-   $idx = Invoke-RestMethod 'https://nodejs.org/dist/index.json'; ^
-   $it = @($idx | Where-Object { $_.version -match '^v24\.' } | Select-Object -First 1)[0]; ^
-   if (-not $it) { throw 'Nenhuma versao v24.x listada em nodejs.org/dist/index.json' }; ^
-   $v = $it.version.TrimStart('v'); ^
-   $url = \"https://nodejs.org/dist/v$v/node-v$v-x64.msi\"; ^
-   $msi = Join-Path $env:TEMP (\"node-v$v-x64.msi\"); ^
-   Write-Host ('Baixando ' + $url); ^
-   Invoke-WebRequest -Uri $url -OutFile $msi -UseBasicParsing; ^
-   Write-Host 'Instalando ^(passivo^)...'; ^
-   $p = Start-Process msiexec.exe -Wait -PassThru -ArgumentList @('/i', $msi, '/passive', 'ADDLOCAL=ALL'); ^
-   if ($p.ExitCode -ne 0) { exit $p.ExitCode }"
-if errorlevel 1 (
-  echo Falha na instalacao via PowerShell. Instale Node 24 manualmente: https://nodejs.org/
-  pause
-  exit /b 1
-)
-call :prepend_nodejs_paths
-where node >nul 2>&1
-if errorlevel 1 (
-  echo Instalacao concluida, mas o PATH ainda nao enxerga o node.exe.
-  echo Abra um NOVO prompt de comando e execute dev-local.bat de novo.
-  pause
-  exit /b 1
-)
-for /f "delims=" %%V in ('node -v') do echo Instalado: %%V
-exit /b 0
-
-:prepend_nodejs_paths
-if exist "%ProgramFiles%\nodejs\node.exe" set "PATH=%ProgramFiles%\nodejs;%PATH%"
-if exist "%ProgramFiles(x86)%\nodejs\node.exe" set "PATH=%ProgramFiles(x86)%\nodejs;%PATH%"
-if exist "%LocalAppData%\Programs\nodejs\node.exe" set "PATH=%LocalAppData%\Programs\nodejs;%PATH%"
 exit /b 0
 
 :run_prisma
