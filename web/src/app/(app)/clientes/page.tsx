@@ -137,18 +137,18 @@ export default function ClientesPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-white">Clientes</h1>
-        <p className="text-sm text-zinc-500 mt-1">
+        <h1 className="text-2xl font-semibold text-zinc-900">Clientes</h1>
+        <p className="text-sm text-zinc-600 mt-1">
           Pessoa física ou jurídica — CPF/CNPJ único.
         </p>
       </div>
 
       <form
         onSubmit={onSubmit}
-        className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 grid gap-4 sm:grid-cols-2"
+        className="rounded-xl border border-zinc-200 bg-white shadow-sm p-6 grid gap-4 sm:grid-cols-2"
       >
         <div className="sm:col-span-2 flex gap-4 items-center flex-wrap">
-          <span className="text-sm text-zinc-400">Tipo de Pessoa:</span>
+          <span className="text-sm text-zinc-600">Tipo de Pessoa:</span>
           <label className="flex items-center gap-2 text-sm">
             <input
               type="radio"
@@ -181,7 +181,7 @@ export default function ClientesPage() {
           </label>
         </div>
         <div className="sm:col-span-2">
-          <label className="text-xs text-zinc-500">Classificação (porte)</label>
+          <label className="text-xs text-zinc-600">Classificação (porte)</label>
           <select
             required
             value={form.classification}
@@ -191,7 +191,7 @@ export default function ClientesPage() {
                 classification: e.target.value as ClientClassification,
               }))
             }
-            className="mt-1 w-full max-w-xs rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+            className="mt-1 w-full max-w-xs rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
           >
             {(Object.keys(classificationLabels) as ClientClassification[]).map(
               (k) => (
@@ -203,16 +203,16 @@ export default function ClientesPage() {
           </select>
         </div>
         <div>
-          <label className="text-xs text-zinc-500">Nome</label>
+          <label className="text-xs text-zinc-600">Nome</label>
           <input
             required
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-            className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
         <div>
-          <label className="text-xs text-zinc-500">
+          <label className="text-xs text-zinc-600">
             {form.type === 'PF' ? 'CPF' : 'CNPJ'}
           </label>
           <input
@@ -231,34 +231,34 @@ export default function ClientesPage() {
               const next = digitsOnly(e.target.value).slice(0, max);
               setForm((f) => ({ ...f, document: next }));
             }}
-            className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm font-mono text-zinc-200"
+            className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm font-mono text-zinc-900"
           />
         </div>
         <div className="sm:col-span-2">
-          <label className="text-xs text-zinc-500">Endereço</label>
+          <label className="text-xs text-zinc-600">Endereço</label>
           <input
             required
             value={form.address}
             onChange={(e) =>
               setForm((f) => ({ ...f, address: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
         <div>
-          <label className="text-xs text-zinc-500">Telefone</label>
+          <label className="text-xs text-zinc-600">Telefone</label>
           <input
             required
             minLength={8}
             value={form.phone}
             onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-            className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
         <div className="sm:col-span-2 flex gap-2">
           <button
             type="submit"
-            className="rounded-lg bg-teal-600 hover:bg-teal-500 px-4 py-2 text-sm font-medium"
+            className="rounded-lg bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 text-sm font-medium"
           >
             {editingId ? 'Atualizar' : 'Cadastrar'}
           </button>
@@ -269,31 +269,31 @@ export default function ClientesPage() {
                 setEditingId(null);
                 setForm(empty);
               }}
-              className="rounded-lg border border-zinc-600 px-4 py-2 text-sm"
+              className="rounded-lg border border-zinc-300 text-zinc-800 px-4 py-2 text-sm"
             >
               Cancelar edição
             </button>
           )}
         </div>
-        {error && <p className="sm:col-span-2 text-sm text-red-400">{error}</p>}
+        {error && <p className="sm:col-span-2 text-sm text-red-600">{error}</p>}
       </form>
 
       <div className="space-y-3">
         <div>
-          <label className="text-xs text-zinc-500">Buscar</label>
+          <label className="text-xs text-zinc-600">Buscar</label>
           <input
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Nome, documento, telefone, endereço, tipo ou classificação"
-            className="mt-1 w-full max-w-xl rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+            className="mt-1 w-full max-w-xl rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
 
-        <div className="rounded-xl border border-zinc-800 overflow-hidden">
+        <div className="rounded-xl border border-zinc-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-zinc-900 text-zinc-400 text-xs uppercase">
+              <thead className="bg-zinc-100 text-zinc-700 text-xs uppercase">
                 <tr>
                   <th className="px-4 py-3">Tipo</th>
                   <th className="px-4 py-3">Classif.</th>
@@ -303,34 +303,34 @@ export default function ClientesPage() {
                   <th className="px-4 py-3 w-32"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-zinc-200">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-8 text-zinc-500">
+                    <td colSpan={6} className="px-4 py-8 text-zinc-600">
                       Carregando…
                     </td>
                   </tr>
                 ) : list.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-8 text-zinc-500">
+                    <td colSpan={6} className="px-4 py-8 text-zinc-600">
                       Nenhum cliente cadastrado.
                     </td>
                   </tr>
                 ) : filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-8 text-zinc-500">
+                    <td colSpan={6} className="px-4 py-8 text-zinc-600">
                       Nenhum cliente corresponde à busca.
                     </td>
                   </tr>
                 ) : (
                   filtered.map((c) => (
-                    <tr key={c.id} className="hover:bg-zinc-900/50">
+                    <tr key={c.id} className="hover:bg-zinc-50">
                       <td className="px-4 py-3">{c.type}</td>
-                      <td className="px-4 py-3 text-zinc-300">
+                      <td className="px-4 py-3 text-zinc-700">
                         {classificationLabels[c.classification]}
                       </td>
-                      <td className="px-4 py-3 text-white">{c.name}</td>
-                      <td className="px-4 py-3 font-mono text-zinc-400">
+                      <td className="px-4 py-3 text-zinc-900">{c.name}</td>
+                      <td className="px-4 py-3 font-mono text-zinc-600">
                         {formatDocument(c.type, c.document)}
                       </td>
                       <td className="px-4 py-3">{c.phone}</td>
@@ -338,14 +338,14 @@ export default function ClientesPage() {
                         <button
                           type="button"
                           onClick={() => startEdit(c)}
-                          className="text-teal-400 text-xs hover:underline"
+                          className="text-teal-700 text-xs hover:underline"
                         >
                           Editar
                         </button>
                         <button
                           type="button"
                           onClick={() => void remove(c.id)}
-                          className="text-red-400 text-xs hover:underline"
+                          className="text-red-600 text-xs hover:underline"
                         >
                           Excluir
                         </button>

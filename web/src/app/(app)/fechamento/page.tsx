@@ -188,57 +188,57 @@ export default function FechamentoPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-12">
       <div>
-        <h1 className="text-2xl font-semibold text-white">Fechamento</h1>
-        <p className="text-sm text-zinc-500 mt-1">
+        <h1 className="text-2xl font-semibold text-zinc-900">Fechamento</h1>
+        <p className="text-sm text-zinc-600 mt-1">
           Relatórios por período (data de envio), mensal e por cliente (PF/PJ).
         </p>
       </div>
 
       {error && (
-        <p className="text-sm text-red-400 border border-red-900/50 rounded-lg px-4 py-3 bg-red-950/30">
+        <p className="text-sm text-red-800 border border-red-200 rounded-lg px-4 py-3 bg-red-50">
           {error}
         </p>
       )}
 
-      <section className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-4">
-        <h2 className="text-lg font-medium text-white">
+      <section className="rounded-xl border border-zinc-200 bg-white shadow-sm p-6 space-y-4">
+        <h2 className="text-lg font-medium text-zinc-900">
           Recibo — linhas e sumário
         </h2>
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-zinc-600">
           Cada linha é um item de pedido; ao final, totais do período.
         </p>
         <div className="flex flex-wrap gap-4 items-end">
           <div>
-            <label className="text-xs text-zinc-500">De</label>
+            <label className="text-xs text-zinc-600">De</label>
             <input
               type="date"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
-              className="mt-1 block rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200"
+              className="mt-1 block rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm text-zinc-900"
             />
           </div>
           <div>
-            <label className="text-xs text-zinc-500">Até</label>
+            <label className="text-xs text-zinc-600">Até</label>
             <input
               type="date"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="mt-1 block rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200"
+              className="mt-1 block rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm text-zinc-900"
             />
           </div>
           <button
             type="button"
             disabled={loading !== null}
             onClick={() => void run('closing')}
-            className="rounded-lg bg-teal-600 hover:bg-teal-500 disabled:opacity-50 px-4 py-2 text-sm font-medium"
+            className="rounded-lg bg-teal-600 hover:bg-teal-500 text-white disabled:opacity-50 px-4 py-2 text-sm font-medium"
           >
             {loading === 'closing' ? '…' : 'Gerar'}
           </button>
         </div>
         {closing && (
-          <div className="overflow-x-auto rounded-lg border border-zinc-800">
+          <div className="overflow-x-auto rounded-lg border border-zinc-200">
             <table className="w-full text-xs sm:text-sm text-left">
-              <thead className="bg-zinc-950 text-zinc-400">
+              <thead className="bg-zinc-100 text-zinc-700">
                 <tr>
                   <th className="px-2 py-2">Data</th>
                   <th className="px-2 py-2">Pedido</th>
@@ -250,16 +250,16 @@ export default function FechamentoPage() {
                   <th className="px-2 py-2">Linha</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-zinc-200">
                 {closing.rows.map((r, i) => (
-                  <tr key={i} className="hover:bg-zinc-900/50">
+                  <tr key={i} className="hover:bg-zinc-50">
                     <td className="px-2 py-1.5 whitespace-nowrap">
                       {r.shippingDate}
                     </td>
                     <td className="px-2 py-1.5 font-mono">{r.orderNumber}</td>
                     <td className="px-2 py-1.5">{r.clientName}</td>
                     <td className="px-2 py-1.5">{r.productName}</td>
-                    <td className="px-2 py-1.5 max-w-48 text-zinc-500">
+                    <td className="px-2 py-1.5 max-w-48 text-zinc-600">
                       {r.observation ?? '—'}
                     </td>
                     <td className="px-2 py-1.5">{r.quantity}</td>
@@ -269,11 +269,11 @@ export default function FechamentoPage() {
                 ))}
               </tbody>
             </table>
-            <div className="border-t border-zinc-800 bg-zinc-950 px-4 py-3 text-sm space-y-1">
-              <p className="text-zinc-400">
+            <div className="border-t border-zinc-200 bg-zinc-50 px-4 py-3 text-sm space-y-1">
+              <p className="text-zinc-600">
                 Período: {closing.period.from} — {closing.period.to}
               </p>
-              <p className="text-white font-medium">
+              <p className="text-zinc-900 font-medium">
                 Sumário: {closing.summary.orderCount} pedidos,{' '}
                 {closing.summary.lineCount} linhas — Total R${' '}
                 {closing.summary.totalBRL}
@@ -283,54 +283,54 @@ export default function FechamentoPage() {
         )}
       </section>
 
-      <section className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-4">
-        <h2 className="text-lg font-medium text-white">Mensal (por envio)</h2>
+      <section className="rounded-xl border border-zinc-200 bg-white shadow-sm p-6 space-y-4">
+        <h2 className="text-lg font-medium text-zinc-900">Mensal (por envio)</h2>
         <div className="flex flex-wrap gap-4 items-end">
           <div>
-            <label className="text-xs text-zinc-500">Ano</label>
+            <label className="text-xs text-zinc-600">Ano</label>
             <input
               type="number"
               min={1950}
               max={2100}
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
-              className="mt-1 block w-28 rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200"
+              className="mt-1 block w-28 rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm text-zinc-900"
             />
           </div>
           <button
             type="button"
             disabled={loading !== null}
             onClick={() => void run('monthly')}
-            className="rounded-lg bg-teal-600 hover:bg-teal-500 disabled:opacity-50 px-4 py-2 text-sm font-medium"
+            className="rounded-lg bg-teal-600 hover:bg-teal-500 text-white disabled:opacity-50 px-4 py-2 text-sm font-medium"
           >
             {loading === 'monthly' ? '…' : 'Gerar'}
           </button>
         </div>
         {monthly && (
-          <div className="overflow-x-auto rounded-lg border border-zinc-800">
+          <div className="overflow-x-auto rounded-lg border border-zinc-200">
             <table className="w-full text-sm text-left">
-              <thead className="bg-zinc-950 text-zinc-400 text-xs uppercase">
+              <thead className="bg-zinc-100 text-zinc-700 text-xs uppercase">
                 <tr>
                   <th className="px-4 py-2">Mês</th>
                   <th className="px-4 py-2">Pedidos</th>
                   <th className="px-4 py-2">Total R$</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-zinc-200">
                 {monthly.months.map((m) => (
-                  <tr key={m.month} className="hover:bg-zinc-900/50">
+                  <tr key={m.month} className="hover:bg-zinc-50">
                     <td className="px-4 py-2">{m.label}</td>
                     <td className="px-4 py-2">{m.orderCount}</td>
                     <td className="px-4 py-2 font-mono">{m.totalBRL}</td>
                   </tr>
                 ))}
               </tbody>
-              <tfoot className="border-t border-zinc-800 bg-zinc-950">
+              <tfoot className="border-t border-zinc-200 bg-zinc-50">
                 <tr>
-                  <td className="px-4 py-2 font-medium text-white" colSpan={2}>
+                  <td className="px-4 py-2 font-medium text-zinc-900" colSpan={2}>
                     Ano {monthly.year}
                   </td>
-                  <td className="px-4 py-2 font-mono font-medium text-teal-300">
+                  <td className="px-4 py-2 font-mono font-medium text-teal-800">
                     {monthly.yearTotalBRL}
                   </td>
                 </tr>
@@ -340,36 +340,36 @@ export default function FechamentoPage() {
         )}
       </section>
 
-      <section className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-4">
-        <h2 className="text-lg font-medium text-white">Por cliente</h2>
-        <p className="text-xs text-zinc-500">
+      <section className="rounded-xl border border-zinc-200 bg-white shadow-sm p-6 space-y-4">
+        <h2 className="text-lg font-medium text-zinc-900">Por cliente</h2>
+        <p className="text-xs text-zinc-600">
           PF e PJ. Escolha um cliente para filtrar ou deixe &quot;Todos&quot;
           para ver o resumo de cada um no período.
         </p>
         <div className="flex flex-wrap gap-4 items-end">
           <div>
-            <label className="text-xs text-zinc-500">De</label>
+            <label className="text-xs text-zinc-600">De</label>
             <input
               type="date"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
-              className="mt-1 block rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200"
+              className="mt-1 block rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm text-zinc-900"
             />
           </div>
           <div>
-            <label className="text-xs text-zinc-500">Até</label>
+            <label className="text-xs text-zinc-600">Até</label>
             <input
               type="date"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="mt-1 block rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200"
+              className="mt-1 block rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm text-zinc-900"
             />
           </div>
           <div
             ref={clientPickerRef}
             className="min-w-[220px] flex-1 relative z-20"
           >
-            <label className="text-xs text-zinc-500">Cliente</label>
+            <label className="text-xs text-zinc-600">Cliente</label>
             <input
               type="text"
               role="combobox"
@@ -405,13 +405,13 @@ export default function FechamentoPage() {
                   else pickClient(row.client);
                 }
               }}
-              className="mt-1 block w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-600"
+              className="mt-1 block w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-600"
             />
             {clientMenuOpen && (
               <ul
                 id="fechamento-client-listbox"
                 role="listbox"
-                className="absolute left-0 right-0 top-full mt-1 max-h-56 overflow-auto rounded-lg border border-zinc-700 bg-zinc-950 py-1 shadow-xl"
+                className="absolute left-0 right-0 top-full mt-1 max-h-56 overflow-auto rounded-lg border border-zinc-200 bg-white py-1 shadow-lg shadow-zinc-900/10"
               >
                 {menuRows.map((row, idx) => {
                   if (row.kind === 'all') {
@@ -423,8 +423,8 @@ export default function FechamentoPage() {
                           aria-selected={!reportClientId && idx === clientHighlight}
                           className={`w-full text-left px-3 py-2 text-sm ${
                             idx === clientHighlight
-                              ? 'bg-zinc-800 text-white'
-                              : 'text-zinc-300 hover:bg-zinc-800/80'
+                              ? 'bg-teal-100 text-teal-900'
+                              : 'text-zinc-700 hover:bg-zinc-50'
                           }`}
                           onMouseEnter={() => setClientHighlight(idx)}
                           onMouseDown={(e) => e.preventDefault()}
@@ -444,19 +444,19 @@ export default function FechamentoPage() {
                         aria-selected={reportClientId === c.id}
                         className={`w-full text-left px-3 py-2 text-sm ${
                           idx === clientHighlight
-                            ? 'bg-zinc-800 text-white'
-                            : 'text-zinc-300 hover:bg-zinc-800/80'
+                            ? 'bg-teal-100 text-teal-900'
+                            : 'text-zinc-700 hover:bg-zinc-50'
                         }`}
                         onMouseEnter={() => setClientHighlight(idx)}
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => pickClient(c)}
                       >
-                        <span className="text-white">{c.name}</span>
-                        <span className="text-zinc-500">
+                        <span className="text-zinc-900">{c.name}</span>
+                        <span className="text-zinc-600">
                           {' '}
                           ({c.type}) —{' '}
                         </span>
-                        <span className="font-mono text-zinc-400">
+                        <span className="font-mono text-zinc-600">
                           {c.document}
                         </span>
                       </button>
@@ -464,7 +464,7 @@ export default function FechamentoPage() {
                   );
                 })}
                 {filteredClients.length === 0 && clientInput.trim() !== '' && (
-                  <li className="px-3 py-2 text-sm text-zinc-500">
+                  <li className="px-3 py-2 text-sm text-zinc-600">
                     Nenhum cliente encontrado
                   </li>
                 )}
@@ -475,15 +475,15 @@ export default function FechamentoPage() {
             type="button"
             disabled={loading !== null}
             onClick={() => void run('client')}
-            className="rounded-lg bg-teal-600 hover:bg-teal-500 disabled:opacity-50 px-4 py-2 text-sm font-medium"
+            className="rounded-lg bg-teal-600 hover:bg-teal-500 text-white disabled:opacity-50 px-4 py-2 text-sm font-medium"
           >
             {loading === 'client' ? '…' : 'Gerar'}
           </button>
         </div>
         {byClient && (
-          <div className="overflow-x-auto rounded-lg border border-zinc-800">
+          <div className="overflow-x-auto rounded-lg border border-zinc-200">
             <table className="w-full text-sm text-left">
-              <thead className="bg-zinc-950 text-zinc-400 text-xs uppercase">
+              <thead className="bg-zinc-100 text-zinc-700 text-xs uppercase">
                 <tr>
                   <th className="px-4 py-2">Cliente</th>
                   <th className="px-4 py-2">Documento</th>
@@ -492,19 +492,19 @@ export default function FechamentoPage() {
                   <th className="px-4 py-2">Total R$</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-zinc-200">
                 {byClient.clients.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-4 py-6 text-zinc-500">
+                    <td colSpan={5} className="px-4 py-6 text-zinc-600">
                       Nenhum pedido neste período
                       {byClient.filterClientId ? ' para este cliente.' : '.'}
                     </td>
                   </tr>
                 ) : (
                   byClient.clients.map((c) => (
-                    <tr key={c.id} className="hover:bg-zinc-900/50">
-                      <td className="px-4 py-2 text-white">{c.name}</td>
-                      <td className="px-4 py-2 font-mono text-zinc-400">
+                    <tr key={c.id} className="hover:bg-zinc-50">
+                      <td className="px-4 py-2 text-zinc-900">{c.name}</td>
+                      <td className="px-4 py-2 font-mono text-zinc-600">
                         {c.document}
                       </td>
                       <td className="px-4 py-2">{c.personType}</td>
@@ -515,14 +515,14 @@ export default function FechamentoPage() {
                 )}
               </tbody>
               {byClient.clients.length > 0 && (
-                <tfoot className="border-t border-zinc-800 bg-zinc-950">
+                <tfoot className="border-t border-zinc-200 bg-zinc-50">
                   <tr>
-                    <td className="px-4 py-2 font-medium" colSpan={4}>
+                    <td className="px-4 py-2 font-medium text-zinc-900" colSpan={4}>
                       {byClient.filterClientId
                         ? 'Total do cliente'
                         : `Total (${byClient.summary.clientCount} clientes)`}
                     </td>
-                    <td className="px-4 py-2 font-mono font-medium text-teal-300">
+                    <td className="px-4 py-2 font-mono font-medium text-teal-800">
                       {byClient.summary.totalBRL}
                     </td>
                   </tr>

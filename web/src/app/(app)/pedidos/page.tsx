@@ -233,8 +233,8 @@ export default function PedidosPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-white">Pedidos</h1>
-        <p className="text-sm text-zinc-500 mt-1">
+        <h1 className="text-2xl font-semibold text-zinc-900">Pedidos</h1>
+        <p className="text-sm text-zinc-600 mt-1">
           Vinculados ao cliente; total calculado pelos preços atuais dos
           produtos.
         </p>
@@ -242,25 +242,25 @@ export default function PedidosPage() {
 
       <form
         onSubmit={onSubmit}
-        className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-4"
+        className="rounded-xl border border-zinc-200 bg-white shadow-sm p-6 space-y-4"
       >
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs text-zinc-500">Nº do pedido</label>
+            <label className="text-xs text-zinc-600">Nº do pedido</label>
             <input
               required
               value={orderNumber}
               onChange={(e) => setOrderNumber(e.target.value)}
-              className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
             />
           </div>
           <div>
-            <label className="text-xs text-zinc-500">Cliente</label>
+            <label className="text-xs text-zinc-600">Cliente</label>
             <select
               required
               value={clientId}
               onChange={(e) => setClientId(e.target.value)}
-              className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
             >
               <option value="">Selecione…</option>
               {clients.map((c) => (
@@ -271,39 +271,39 @@ export default function PedidosPage() {
             </select>
           </div>
           <div>
-            <label className="text-xs text-zinc-500">Data de envio</label>
+            <label className="text-xs text-zinc-600">Data de envio</label>
             <input
               required
               type="date"
               value={shippingDate}
               onChange={(e) => setShippingDate(e.target.value)}
-              className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200"
+              className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm text-zinc-900"
             />
           </div>
         </div>
 
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-zinc-500 uppercase">Itens</span>
+            <span className="text-xs text-zinc-600 uppercase">Itens</span>
             <button
               type="button"
               onClick={addLine}
-              className="text-xs text-teal-400 hover:underline"
+              className="text-xs text-teal-700 hover:underline"
             >
               + produto
             </button>
           </div>
           {lines.map((line, i) => (
-            <div key={i} className="rounded-lg border border-zinc-800/80 p-3 space-y-2">
+            <div key={i} className="rounded-lg border border-zinc-200 p-3 space-y-2">
               <div className="flex flex-wrap gap-2 items-end">
                 <div className="flex-1 min-w-[200px]">
-                  <label className="text-xs text-zinc-500">Produto</label>
+                  <label className="text-xs text-zinc-600">Produto</label>
                   <select
                     value={line.productId}
                     onChange={(e) =>
                       updateLine(i, { productId: e.target.value })
                     }
-                    className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+                    className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
                   >
                     <option value="">Produto…</option>
                     {products.map((p) => (
@@ -314,7 +314,7 @@ export default function PedidosPage() {
                   </select>
                 </div>
                 <div className="w-24">
-                  <label className="text-xs text-zinc-500">Qtd</label>
+                  <label className="text-xs text-zinc-600">Qtd</label>
                   <input
                     type="number"
                     min={1}
@@ -324,21 +324,21 @@ export default function PedidosPage() {
                         quantity: Math.max(1, Number(e.target.value) || 1),
                       })
                     }
-                    className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+                    className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
                   />
                 </div>
                 {lines.length > 1 && (
                   <button
                     type="button"
                     onClick={() => removeLine(i)}
-                    className="text-red-400 text-xs pb-2"
+                    className="text-red-600 text-xs pb-2"
                   >
                     remover
                   </button>
                 )}
               </div>
               <div>
-                <label className="text-xs text-zinc-500">Observação (opcional)</label>
+                <label className="text-xs text-zinc-600">Observação (opcional)</label>
                 <input
                   type="text"
                   maxLength={2000}
@@ -347,7 +347,7 @@ export default function PedidosPage() {
                     updateLine(i, { observation: e.target.value })
                   }
                   placeholder="Nota sobre este item"
-                  className="mt-1 w-full rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+                  className="mt-1 w-full rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
                 />
               </div>
             </div>
@@ -357,7 +357,7 @@ export default function PedidosPage() {
         <div className="flex gap-2">
           <button
             type="submit"
-            className="rounded-lg bg-teal-600 hover:bg-teal-500 px-4 py-2 text-sm font-medium"
+            className="rounded-lg bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 text-sm font-medium"
           >
             {editingId ? 'Atualizar pedido' : 'Criar pedido'}
           </button>
@@ -365,30 +365,30 @@ export default function PedidosPage() {
             <button
               type="button"
               onClick={resetForm}
-              className="rounded-lg border border-zinc-600 px-4 py-2 text-sm"
+              className="rounded-lg border border-zinc-300 text-zinc-800 px-4 py-2 text-sm"
             >
               Cancelar
             </button>
           )}
         </div>
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && <p className="text-sm text-red-600">{error}</p>}
       </form>
 
       <div className="space-y-3">
         <div>
-          <label className="text-xs text-zinc-500">Buscar pedidos</label>
+          <label className="text-xs text-zinc-600">Buscar pedidos</label>
           <input
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Nº do pedido, cliente, documento, data de envio, produto ou observação"
-            className="mt-1 w-full max-w-xl rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm"
+            className="mt-1 w-full max-w-xl rounded-lg bg-white border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
 
-        <div className="rounded-xl border border-zinc-800 overflow-hidden">
+        <div className="rounded-xl border border-zinc-200 overflow-hidden">
           <table className="w-full text-sm text-left">
-            <thead className="bg-zinc-900 text-zinc-400 text-xs uppercase">
+            <thead className="bg-zinc-100 text-zinc-700 text-xs uppercase">
               <tr>
                 <th className="px-4 py-3">Pedido</th>
                 <th className="px-4 py-3">Cliente</th>
@@ -397,36 +397,36 @@ export default function PedidosPage() {
                 <th className="px-4 py-3 w-40"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800">
+            <tbody className="divide-y divide-zinc-200">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-zinc-500">
+                  <td colSpan={5} className="px-4 py-8 text-zinc-600">
                     Carregando…
                   </td>
                 </tr>
               ) : orders.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-zinc-500">
+                  <td colSpan={5} className="px-4 py-8 text-zinc-600">
                     Nenhum pedido.
                   </td>
                 </tr>
               ) : filteredOrders.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-zinc-500">
+                  <td colSpan={5} className="px-4 py-8 text-zinc-600">
                     Nenhum pedido corresponde à busca.
                   </td>
                 </tr>
               ) : (
                 filteredOrders.map((o) => (
-                  <tr key={o.id} className="hover:bg-zinc-900/50 align-top">
-                    <td className="px-4 py-3 font-mono text-white">
+                  <tr key={o.id} className="hover:bg-zinc-50 align-top">
+                    <td className="px-4 py-3 font-mono text-zinc-900">
                       {o.orderNumber}
-                      <ul className="mt-1 text-xs text-zinc-500 font-normal list-disc list-inside">
+                      <ul className="mt-1 text-xs text-zinc-600 font-normal list-disc list-inside">
                         {o.items.map((it) => (
                           <li key={it.id}>
                             {it.product.name} × {it.quantity}
                             {it.observation ? (
-                              <span className="text-zinc-500">
+                              <span className="text-zinc-600">
                                 {' '}
                                 — {it.observation}
                               </span>
@@ -444,21 +444,21 @@ export default function PedidosPage() {
                       <button
                         type="button"
                         onClick={() => void openView(o.id)}
-                        className="text-zinc-300 text-xs hover:underline block"
+                        className="text-zinc-700 text-xs hover:underline block"
                       >
                         Visualizar
                       </button>
                       <button
                         type="button"
                         onClick={() => startEdit(o)}
-                        className="text-teal-400 text-xs hover:underline block"
+                        className="text-teal-700 text-xs hover:underline block"
                       >
                         Editar
                       </button>
                       <button
                         type="button"
                         onClick={() => void removeOrder(o.id)}
-                        className="text-red-400 text-xs hover:underline"
+                        className="text-red-600 text-xs hover:underline"
                       >
                         Excluir
                       </button>
@@ -473,7 +473,7 @@ export default function PedidosPage() {
 
       {viewOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-900/50"
           role="dialog"
           aria-modal="true"
           aria-labelledby="order-view-title"
@@ -481,9 +481,9 @@ export default function PedidosPage() {
             if (e.target === e.currentTarget) closeView();
           }}
         >
-          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl border border-zinc-700 bg-zinc-950 shadow-xl shadow-black/40">
-            <div className="sticky top-0 flex items-start justify-between gap-4 border-b border-zinc-800 bg-zinc-950 px-5 py-4">
-              <h2 id="order-view-title" className="text-lg font-medium text-white">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/10">
+            <div className="sticky top-0 flex items-start justify-between gap-4 border-b border-zinc-200 bg-zinc-50 px-5 py-4">
+              <h2 id="order-view-title" className="text-lg font-medium text-zinc-900">
                 {viewOrder
                   ? `Pedido ${viewOrder.orderNumber}`
                   : 'Detalhes do pedido'}
@@ -491,44 +491,44 @@ export default function PedidosPage() {
               <button
                 type="button"
                 onClick={closeView}
-                className="rounded-lg border border-zinc-600 px-3 py-1 text-sm text-zinc-300 hover:bg-zinc-900"
+                className="rounded-lg border border-zinc-300 px-3 py-1 text-sm text-zinc-800 hover:bg-zinc-100"
               >
                 Fechar
               </button>
             </div>
             <div className="px-5 py-4 space-y-6 text-sm">
               {viewLoading && (
-                <p className="text-zinc-500">Carregando…</p>
+                <p className="text-zinc-600">Carregando…</p>
               )}
               {viewError && (
-                <p className="text-red-400">{viewError}</p>
+                <p className="text-red-600">{viewError}</p>
               )}
               {viewOrder && !viewLoading && (
                 <>
                   <section>
-                    <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 mb-2">
+                    <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 mb-2">
                       Cliente
                     </h3>
-                    <dl className="grid gap-2 sm:grid-cols-2 text-zinc-200">
+                    <dl className="grid gap-2 sm:grid-cols-2 text-zinc-800">
                       <div>
-                        <dt className="text-xs text-zinc-500">Nome</dt>
-                        <dd className="text-white">{viewOrder.client.name}</dd>
+                        <dt className="text-xs text-zinc-600">Nome</dt>
+                        <dd className="text-zinc-900">{viewOrder.client.name}</dd>
                       </div>
                       <div>
-                        <dt className="text-xs text-zinc-500">Tipo</dt>
+                        <dt className="text-xs text-zinc-600">Tipo</dt>
                         <dd>{viewOrder.client.type}</dd>
                       </div>
                       <div>
-                        <dt className="text-xs text-zinc-500">Classificação</dt>
+                        <dt className="text-xs text-zinc-600">Classificação</dt>
                         <dd>
                           {classificationLabels[viewOrder.client.classification]}
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-xs text-zinc-500">
+                        <dt className="text-xs text-zinc-600">
                           {viewOrder.client.type === 'PF' ? 'CPF' : 'CNPJ'}
                         </dt>
-                        <dd className="font-mono text-zinc-300">
+                        <dd className="font-mono text-zinc-800">
                           {formatDocument(
                             viewOrder.client.type,
                             viewOrder.client.document,
@@ -536,68 +536,68 @@ export default function PedidosPage() {
                         </dd>
                       </div>
                       <div className="sm:col-span-2">
-                        <dt className="text-xs text-zinc-500">Endereço</dt>
+                        <dt className="text-xs text-zinc-600">Endereço</dt>
                         <dd>{viewOrder.client.address}</dd>
                       </div>
                       <div>
-                        <dt className="text-xs text-zinc-500">Telefone</dt>
+                        <dt className="text-xs text-zinc-600">Telefone</dt>
                         <dd>{viewOrder.client.phone}</dd>
                       </div>
                     </dl>
                   </section>
 
                   <section>
-                    <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 mb-2">
+                    <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 mb-2">
                       Pedido
                     </h3>
-                    <dl className="grid gap-2 sm:grid-cols-2 text-zinc-200 mb-4">
+                    <dl className="grid gap-2 sm:grid-cols-2 text-zinc-800 mb-4">
                       <div>
-                        <dt className="text-xs text-zinc-500">Nº do pedido</dt>
-                        <dd className="font-mono text-white">
+                        <dt className="text-xs text-zinc-600">Nº do pedido</dt>
+                        <dd className="font-mono text-zinc-900">
                           {viewOrder.orderNumber}
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-xs text-zinc-500">Data de envio</dt>
+                        <dt className="text-xs text-zinc-600">Data de envio</dt>
                         <dd>{viewOrder.shippingDate.slice(0, 10)}</dd>
                       </div>
                       <div>
-                        <dt className="text-xs text-zinc-500">Total</dt>
-                        <dd className="font-mono text-white text-base">
+                        <dt className="text-xs text-zinc-600">Total</dt>
+                        <dd className="font-mono text-zinc-900 text-base">
                           R$ {Number(viewOrder.total).toFixed(2)}
                         </dd>
                       </div>
                     </dl>
 
-                    <div className="overflow-x-auto rounded-lg border border-zinc-800">
+                    <div className="overflow-x-auto rounded-lg border border-zinc-200">
                       <table className="w-full text-xs sm:text-sm">
-                        <thead className="bg-zinc-900 text-zinc-400">
+                        <thead className="bg-zinc-100 text-zinc-700">
                           <tr>
                             <th className="px-3 py-2 text-left">Produto</th>
                             <th className="px-3 py-2 text-right">Qtd</th>
+                            <th className="px-3 py-2 text-left">Obs.</th>
                             <th className="px-3 py-2 text-right">Unit.</th>
                             <th className="px-3 py-2 text-right">Subtotal</th>
-                            <th className="px-3 py-2 text-left">Obs.</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-800">
+                        <tbody className="divide-y divide-zinc-200">
                           {viewOrder.items.map((it) => {
                             const sub =
                               Number(it.unitPrice) * it.quantity;
                             return (
-                              <tr key={it.id} className="text-zinc-200">
+                              <tr key={it.id} className="text-zinc-800">
                                 <td className="px-3 py-2">{it.product.name}</td>
                                 <td className="px-3 py-2 text-right">
                                   {it.quantity}
+                                </td>
+                                <td className="px-3 py-2 text-zinc-600 max-w-48">
+                                  {it.observation ?? '—'}
                                 </td>
                                 <td className="px-3 py-2 text-right font-mono">
                                   R$ {Number(it.unitPrice).toFixed(2)}
                                 </td>
                                 <td className="px-3 py-2 text-right font-mono">
                                   R$ {sub.toFixed(2)}
-                                </td>
-                                <td className="px-3 py-2 text-zinc-500 max-w-48">
-                                  {it.observation ?? '—'}
                                 </td>
                               </tr>
                             );
