@@ -245,7 +245,7 @@ export default function FechamentoPage() {
                   <th className="px-2 py-2">Pedido</th>
                   <th className="px-2 py-2">Cliente</th>
                   <th className="px-2 py-2">Produto</th>
-                  <th className="px-2 py-2">Detalhes (produto)</th>
+                  <th className="px-2 py-2">Detalhes</th>
                   <th className="px-2 py-2">Obs. pedido</th>
                   <th className="px-2 py-2">Qtd</th>
                   <th className="px-2 py-2">Unit.</th>
