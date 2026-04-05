@@ -22,7 +22,12 @@ type ClientDetail = {
   phone: string;
 };
 
-type Product = { id: string; name: string; price: string };
+type Product = {
+  id: string;
+  name: string;
+  details: string | null;
+  price: string;
+};
 type OrderItem = {
   id: string;
   quantity: number;
@@ -57,6 +62,12 @@ function orderMatchesQuery(o: Order, raw: string) {
   }
   for (const it of o.items) {
     if (it.product.name.toLowerCase().includes(q)) return true;
+    if (
+      it.product.details &&
+      it.product.details.toLowerCase().includes(q)
+    ) {
+      return true;
+    }
     if (it.observation && it.observation.toLowerCase().includes(q)) return true;
   }
   return false;
@@ -293,7 +304,11 @@ export default function PedidosPage() {
               + produto
             </button>
           </div>
-          {lines.map((line, i) => (
+          {lines.map((line, i) => {
+            const selectedProduct = products.find(
+              (p) => p.id === line.productId,
+            );
+            return (
             <div key={i} className="rounded-lg border border-zinc-200 p-3 space-y-2">
               <div className="flex flex-wrap gap-2 items-end">
                 <div className="flex-1 min-w-[200px]">
@@ -312,6 +327,11 @@ export default function PedidosPage() {
                       </option>
                     ))}
                   </select>
+                  {selectedProduct?.details ? (
+                    <p className="mt-1.5 text-xs text-zinc-600 border-l-2 border-zinc-200 pl-2 leading-snug">
+                      {selectedProduct.details}
+                    </p>
+                  ) : null}
                 </div>
                 <div className="w-24">
                   <label className="text-xs text-zinc-600">Qtd</label>
@@ -351,7 +371,8 @@ export default function PedidosPage() {
                 />
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="flex gap-2">
@@ -424,12 +445,18 @@ export default function PedidosPage() {
                       <ul className="mt-1 text-xs text-zinc-600 font-normal list-disc list-inside">
                         {o.items.map((it) => (
                           <li key={it.id}>
-                            {it.product.name} × {it.quantity}
+                            <div>
+                              {it.product.name} × {it.quantity}
+                            </div>
+                            {it.product.details ? (
+                              <div className="text-zinc-500 mt-0.5 pl-1 border-l-2 border-zinc-200 text-[11px] leading-snug">
+                                {it.product.details}
+                              </div>
+                            ) : null}
                             {it.observation ? (
-                              <span className="text-zinc-600">
-                                {' '}
-                                — {it.observation}
-                              </span>
+                              <div className="text-zinc-600 mt-0.5 text-[11px]">
+                                Obs. pedido: {it.observation}
+                              </div>
                             ) : null}
                           </li>
                         ))}
@@ -574,8 +601,9 @@ export default function PedidosPage() {
                         <thead className="bg-zinc-100 text-zinc-700">
                           <tr>
                             <th className="px-3 py-2 text-left">Produto</th>
+                            <th className="px-3 py-2 text-left">Detalhes (cadastro)</th>
                             <th className="px-3 py-2 text-right">Qtd</th>
-                            <th className="px-3 py-2 text-left">Obs.</th>
+                            <th className="px-3 py-2 text-left">Obs. pedido</th>
                             <th className="px-3 py-2 text-right">Unit.</th>
                             <th className="px-3 py-2 text-right">Subtotal</th>
                           </tr>
@@ -586,17 +614,22 @@ export default function PedidosPage() {
                               Number(it.unitPrice) * it.quantity;
                             return (
                               <tr key={it.id} className="text-zinc-800">
-                                <td className="px-3 py-2">{it.product.name}</td>
-                                <td className="px-3 py-2 text-right">
+                                <td className="px-3 py-2 align-top font-medium">
+                                  {it.product.name}
+                                </td>
+                                <td className="px-3 py-2 align-top text-zinc-600 max-w-xs text-xs">
+                                  {it.product.details ?? '—'}
+                                </td>
+                                <td className="px-3 py-2 text-right align-top">
                                   {it.quantity}
                                 </td>
-                                <td className="px-3 py-2 text-zinc-600 max-w-48">
+                                <td className="px-3 py-2 text-zinc-600 max-w-48 align-top text-xs">
                                   {it.observation ?? '—'}
                                 </td>
-                                <td className="px-3 py-2 text-right font-mono">
+                                <td className="px-3 py-2 text-right font-mono align-top">
                                   R$ {Number(it.unitPrice).toFixed(2)}
                                 </td>
-                                <td className="px-3 py-2 text-right font-mono">
+                                <td className="px-3 py-2 text-right font-mono align-top">
                                   R$ {sub.toFixed(2)}
                                 </td>
                               </tr>

@@ -33,6 +33,7 @@ export class ReportsService {
           clientDocument: o.client.document,
           personType: o.client.type,
           productName: it.product.name,
+          productDetails: it.product.details ?? null,
           quantity: it.quantity,
           unitPrice: money(it.unitPrice),
           lineTotal: money(line),

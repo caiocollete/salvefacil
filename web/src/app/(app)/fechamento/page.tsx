@@ -16,6 +16,7 @@ type ClosingRow = {
   clientDocument: string;
   personType: string;
   productName: string;
+  productDetails: string | null;
   quantity: number;
   unitPrice: string;
   lineTotal: string;
@@ -244,7 +245,8 @@ export default function FechamentoPage() {
                   <th className="px-2 py-2">Pedido</th>
                   <th className="px-2 py-2">Cliente</th>
                   <th className="px-2 py-2">Produto</th>
-                  <th className="px-2 py-2">Obs.</th>
+                  <th className="px-2 py-2">Detalhes (produto)</th>
+                  <th className="px-2 py-2">Obs. pedido</th>
                   <th className="px-2 py-2">Qtd</th>
                   <th className="px-2 py-2">Unit.</th>
                   <th className="px-2 py-2">Linha</th>
@@ -259,6 +261,9 @@ export default function FechamentoPage() {
                     <td className="px-2 py-1.5 font-mono">{r.orderNumber}</td>
                     <td className="px-2 py-1.5">{r.clientName}</td>
                     <td className="px-2 py-1.5">{r.productName}</td>
+                    <td className="px-2 py-1.5 max-w-48 text-xs text-zinc-600">
+                      {r.productDetails ?? '—'}
+                    </td>
                     <td className="px-2 py-1.5 max-w-48 text-zinc-600">
                       {r.observation ?? '—'}
                     </td>
